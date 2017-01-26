@@ -1,0 +1,33 @@
+<% article.clear_confirm_errors %>
+
+<%= form_for article do |f| %>
+  <% if article.errors.any? %>
+    <div id="error_explanation">
+      <ul>
+        <% article.errors.full_messages.each do |message|%>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <%= f.hidden_field :confirmed %>
+  <% if article.confirmed.blank? %>
+    <div class="field">
+      <%= f.label :title %>
+      <%= f.text_field :title %>
+    </div>
+    <div class="actions">
+      <%= f.submit "確認" %>
+    </div>
+  <% else %>
+    <div class="field">
+      <%= f.hidden_field :title %>
+      Title: <%= article.title %>
+    </div>
+    <div class="actions">
+      <%= f.button "戻る", name: "#{f.object_name}[finished]", value: "" %>
+      <%= f.button "実行", name: "#{f.object_name}[finished]", value: "1" %>
+    </div>
+  <% end %>
+<% end %>
